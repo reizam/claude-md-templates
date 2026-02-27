@@ -1,85 +1,87 @@
 # CLAUDE.md Templates
 
-Two ready-to-use templates + two installable skills for structuring your CLAUDE.md files — based on findings from the ETH Zurich research paper ["Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?"](https://arxiv.org/abs/2602.11988).
+Ready-to-use templates for structuring your CLAUDE.md files — based on findings from the ETH Zurich research paper ["Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?"](https://arxiv.org/abs/2602.11988).
 
-## Key findings from the paper
+> **TL;DR** — LLM-generated context files: **-3% performance, +20% cost**. Human-written ones: slight gain. Write less, but better.
 
-- **LLM-generated context files**: -3% performance, +20% cost
-- **Human-written context files**: slight performance gain
+## The golden rule
+
+**Write only what the agent cannot discover on its own.**
+
+The paper shows that:
 - Context files that duplicate existing documentation **hurt** performance
-- Agents **do follow** instructions — which means bad instructions actively make things worse
-- Repository overviews in context files are **not effective** (agents can explore on their own)
-
-**The golden rule: write only what the agent cannot discover on its own.**
+- Agents **do follow** instructions — bad instructions actively make things worse
+- Repository overviews are **not effective** (agents can `ls` and `find` on their own)
+- More tokens = more cost, not more accuracy
 
 ## The 2 files you need
 
-### 1. Global — `~/.claude/CLAUDE.md`
+| File | Location | Scope | Target |
+|---|---|---|---|
+| [`global-CLAUDE.md`](./global-CLAUDE.md) | `~/.claude/CLAUDE.md` | All projects | ~30 lines |
+| [`project-CLAUDE.md`](./project-CLAUDE.md) | `./CLAUDE.md` (repo root) | This project | ~40 lines |
 
-Your personal defaults that apply to **every** project.
+### Global — your engineering identity
 
-→ [`global-CLAUDE.md`](./global-CLAUDE.md)
+> [`global-CLAUDE.md`](./global-CLAUDE.md)
 
-**What goes here:**
-- **Philosophy** — your core engineering values (DRY, YAGNI, simplicity over cleverness)
-- Response language and style preferences
-- Code conventions you always want (naming, strictness)
+- **Philosophy** — DRY, YAGNI, simplicity over cleverness
+- Response language and style
+- Code conventions (naming, strictness)
 - Preferred tools (package manager, test runner)
 - Git commit conventions
-- Workflow rules (read before editing, one task at a time)
+- Workflow rules
 
-**~30 lines. If it's discoverable from `package.json`, don't repeat it.**
+### Project — this repo's context
 
-### 2. Project — `./CLAUDE.md` (repo root)
+> [`project-CLAUDE.md`](./project-CLAUDE.md)
 
-Context specific to **this** repository.
-
-→ [`project-CLAUDE.md`](./project-CLAUDE.md)
-
-**What goes here:**
-- **Philosophy** — design principles behind THIS project's architecture
+- **Philosophy** — this project's design principles
 - What the project does (1-2 sentences)
 - Non-obvious stack choices
-- Essential commands (only if they have special flags/setup)
-- Architecture decisions the agent would get wrong
-- Patterns to follow that aren't enforced by linters
+- Commands with special setup
+- Architecture decisions
+- Patterns to follow
 - Explicit "do not" guardrails
-
-**~40 lines. If the agent can figure it out by reading the code, skip it.**
-
-## How to use
-
-1. **Fork this repo**
-2. **Copy `global-CLAUDE.md`** to `~/.claude/CLAUDE.md` and edit to match your preferences
-3. **Copy `project-CLAUDE.md`** to the root of your project as `CLAUDE.md` and fill in your specifics
-4. **Delete every comment line** (lines starting with `#` followed by `[...]`) — they're just guides
 
 ## Why Philosophy matters
 
-The Philosophy section is the most important part of your CLAUDE.md. It shapes **how** the agent thinks, not just what it does. Without it, the agent defaults to generic patterns. With it, the code feels like **yours**.
+The Philosophy section shapes **how** the agent thinks, not just what it does. Without it, the agent defaults to generic patterns. With it, the generated code feels like **yours**.
 
-**Global philosophy** = your engineering identity (DRY, YAGNI, simplicity over cleverness)
-**Project philosophy** = this project's design principles (schema-first, fail loudly, thin components)
+| Level | What it captures | Example |
+|---|---|---|
+| Global | Your engineering identity | "YAGNI: only implement what's needed NOW" |
+| Project | This project's design principles | "Schema-first: Zod defines the contract, everything derives from it" |
 
-Keep it to 3-5 bullet points. These are the tiebreakers when the agent faces ambiguous decisions.
+3-5 bullet points. These are the tiebreakers when the agent faces ambiguous decisions.
 
-## Install as skills
+## Quick start
 
-Instead of copy-pasting, you can install these as Claude Code skills that **generate** CLAUDE.md files tailored to your setup:
+### Option 1 — Copy the templates
+
+```bash
+# Global (run once)
+cp global-CLAUDE.md ~/.claude/CLAUDE.md
+
+# Project (run per repo)
+cp project-CLAUDE.md /path/to/your/project/CLAUDE.md
+```
+
+Then edit each file: fill in your values, delete the comment lines (`# [...]`).
+
+### Option 2 — Install as skills
+
+The skills **generate** CLAUDE.md files tailored to your setup — they analyze your project and only include what the agent can't discover on its own.
 
 ```bash
 npx skills add reizam/claude-md-templates
 ```
 
-This installs two skills:
+Then use:
 - `/claude-md-global` — interactively generates your `~/.claude/CLAUDE.md`
-- `/claude-md-project` — analyzes your repo and generates a project `./CLAUDE.md`
-
-The skills apply the same anti-bloat principles from the paper: they read your project's config files first and only include what the agent can't discover on its own.
+- `/claude-md-project` — reads your repo's config files and generates a `./CLAUDE.md`
 
 ## What NOT to write
-
-Based on the paper, these patterns **hurt** performance:
 
 | Avoid | Why |
 |---|---|
