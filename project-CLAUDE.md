@@ -2,6 +2,14 @@
 # Specific to THIS project. Keep it focused (~40 lines).
 # Rule: only write what the agent CANNOT discover from the code.
 
+# Philosophy
+# [The design principles behind THIS project's architecture.]
+# [Guides the agent when making judgment calls — not generic advice.]
+- Convention over configuration: follow established patterns, don't invent new ones
+- Thin components, thick hooks: UI components are dumb, logic lives in hooks
+- Fail loudly: errors bubble up to boundaries, never swallowed silently
+- Schema-first: Zod schemas define the contract, everything else derives from them
+
 # What this project does
 # [1-2 sentences. Not a sales pitch — just enough to understand the domain.]
 Example: SaaS billing API that handles subscriptions, invoicing, and payment webhooks for Stripe.

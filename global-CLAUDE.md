@@ -2,6 +2,14 @@
 # Applies to ALL your projects. Keep it short (~30 lines).
 # Rule: only write what the agent CANNOT discover on its own.
 
+# Philosophy
+# [Your core engineering values — shapes HOW the agent thinks, not just what it does.]
+# [These are the principles that make AI-generated code feel like YOUR code.]
+- DRY: extract repeated logic into reusable functions/modules
+- YAGNI: only implement what's needed NOW — no speculative abstractions
+- Elegant code: favor simplicity and clarity over cleverness
+- Fix root causes, never apply band-aid solutions that create tech debt
+
 # Language & response style
 Always respond in English.
 Generate code, comments, and commits in English.

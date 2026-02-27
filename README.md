@@ -1,6 +1,6 @@
 # CLAUDE.md Templates
 
-Two ready-to-use templates for structuring your CLAUDE.md files — based on findings from the ETH Zurich research paper ["Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?"](https://arxiv.org/abs/2602.11988).
+Two ready-to-use templates + two installable skills for structuring your CLAUDE.md files — based on findings from the ETH Zurich research paper ["Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?"](https://arxiv.org/abs/2602.11988).
 
 ## Key findings from the paper
 
@@ -21,6 +21,7 @@ Your personal defaults that apply to **every** project.
 → [`global-CLAUDE.md`](./global-CLAUDE.md)
 
 **What goes here:**
+- **Philosophy** — your core engineering values (DRY, YAGNI, simplicity over cleverness)
 - Response language and style preferences
 - Code conventions you always want (naming, strictness)
 - Preferred tools (package manager, test runner)
@@ -36,6 +37,7 @@ Context specific to **this** repository.
 → [`project-CLAUDE.md`](./project-CLAUDE.md)
 
 **What goes here:**
+- **Philosophy** — design principles behind THIS project's architecture
 - What the project does (1-2 sentences)
 - Non-obvious stack choices
 - Essential commands (only if they have special flags/setup)
@@ -51,6 +53,29 @@ Context specific to **this** repository.
 2. **Copy `global-CLAUDE.md`** to `~/.claude/CLAUDE.md` and edit to match your preferences
 3. **Copy `project-CLAUDE.md`** to the root of your project as `CLAUDE.md` and fill in your specifics
 4. **Delete every comment line** (lines starting with `#` followed by `[...]`) — they're just guides
+
+## Why Philosophy matters
+
+The Philosophy section is the most important part of your CLAUDE.md. It shapes **how** the agent thinks, not just what it does. Without it, the agent defaults to generic patterns. With it, the code feels like **yours**.
+
+**Global philosophy** = your engineering identity (DRY, YAGNI, simplicity over cleverness)
+**Project philosophy** = this project's design principles (schema-first, fail loudly, thin components)
+
+Keep it to 3-5 bullet points. These are the tiebreakers when the agent faces ambiguous decisions.
+
+## Install as skills
+
+Instead of copy-pasting, you can install these as Claude Code skills that **generate** CLAUDE.md files tailored to your setup:
+
+```bash
+npx skills add reizam/claude-md-templates
+```
+
+This installs two skills:
+- `/claude-md-global` — interactively generates your `~/.claude/CLAUDE.md`
+- `/claude-md-project` — analyzes your repo and generates a project `./CLAUDE.md`
+
+The skills apply the same anti-bloat principles from the paper: they read your project's config files first and only include what the agent can't discover on its own.
 
 ## What NOT to write
 
