@@ -4,7 +4,8 @@
 
 # Philosophy
 # [Your core engineering values — shapes HOW the agent thinks, not just what it does.]
-# [These are the principles that make AI-generated code feel like YOUR code.]
+# [Test: "Would two reasonable engineers disagree on this?" If not, too generic.]
+# [BAD: "Write clean code" — no one disagrees. GOOD: "YAGNI: no speculative abstractions".]
 - DRY: extract repeated logic into reusable functions/modules
 - YAGNI: only implement what's needed NOW — no speculative abstractions
 - Elegant code: favor simplicity and clarity over cleverness
@@ -16,7 +17,6 @@ Generate code, comments, and commits in English.
 
 # Code conventions
 - Naming: files in kebab-case, variables in camelCase, components in PascalCase
-- Prefer `function` declarations over arrow functions (except callbacks)
 - Strict TypeScript: prefer `unknown` over `any`, no implicit returns
 
 # Tools
